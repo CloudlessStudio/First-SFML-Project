@@ -15,6 +15,10 @@ void Player::update() {
 
 
 }
+sf::FloatRect Player::get_bounds() {
+    return _shape.getGlobalBounds();
+}
+
 
 void Player::draw(sf::RenderWindow& window) {
 	window.draw(_shape);

@@ -10,6 +10,7 @@ public:   //here we decalare some functions and a constructor 'Player' to be use
 	void update(); //update function
 	void draw(sf::RenderWindow& window);  //reference to the window which we will draw this on
 	void handle_input(sf::Event event);
+	sf::FloatRect get_bounds();
 
 private: //these are only for the scope of the class hence why they are private, cant be used outside of Player
 	sf::RectangleShape _shape;  //
