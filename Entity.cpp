@@ -11,10 +11,20 @@ Entity::Entity(sf::Vector2f position) {
 	
 	
 };
-
+	void Entity::reset() {
+		_entity_sprite.setScale(4.f, 4.f);
+		}
 	void Entity::update() {
+		sf::Vector2f curr_scale = _entity_sprite.getScale();
+		sf::Vector2f curr_pos = _entity_sprite.getPosition();
 		
-
+		sf::err() << "Scale is: " << curr_scale.x << ", " << curr_scale.y << std::endl;
+		if (curr_scale.x <= 0 || curr_scale.y <= 0 ) {
+			_entity_sprite.setScale(4.f, 4.f);
+		}
+		else {
+			_entity_sprite.setScale(curr_scale.x - .0022, curr_scale.y - .0022);
+		}
 	};
 
 	sf::FloatRect Entity::get_bounds() {
@@ -29,6 +39,7 @@ Entity::Entity(sf::Vector2f position) {
 
 		return num;
 	}
+
 
 
 	void Entity::set_random_positon() {            //set random postion

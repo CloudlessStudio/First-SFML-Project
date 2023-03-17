@@ -1,2 +1,4 @@
 ﻿  Entity.cpp
+C:\Users\kondi\OneDrive\Desktop\VS_projects\sfml_1\Entity.cpp(26,63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\kondi\OneDrive\Desktop\VS_projects\sfml_1\Entity.cpp(26,41): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   sfml_1.vcxproj -> C:\Users\kondi\OneDrive\Desktop\VS_projects\sfml_1\x64\Debug\sfml_1.exe
