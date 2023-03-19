@@ -10,6 +10,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	void set_random_positon();
 	sf::FloatRect get_bounds();
+	int life = 1;
 	
 	
 	

@@ -10,6 +10,10 @@ Player::Player(sf::Vector2f position) {
 
 }
 
+void Player::reset() {
+    _sprite_player.setPosition(600.f,600.f);
+}
+
 void Player::update() {
     _sprite_player.move(_velocity * _speed);
     static sf::Clock timer;

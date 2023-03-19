@@ -2,10 +2,12 @@
 #include <SFML/Audio.hpp>
 #include "Player.h"
 #include "Entity.h"
+#include "Menu.h"
+#include "GameOver.h"
 
 int main() {
 
-	sf::RenderWindow window(sf::VideoMode(1200, 1200), "MovingBlock!");
+	sf::RenderWindow window(sf::VideoMode(1200, 1200), "BurgerConsumer");
 	sf::Texture background; // declare and load bg texture
 	background.loadFromFile("SpriteImages/GrassBG.png");
 	sf::Sprite sprite_bg; //decalre sprite
@@ -33,6 +35,15 @@ int main() {
 	//characters------------------------------------
 	Player blocky(sf::Vector2f(600.f, 600.f)); //declare the player 
 	Entity enemy(sf::Vector2f(800.f, 800.f)); //declare the enemy
+
+
+	enum gameState {
+		MENU,
+		PLAY,
+		GAMEOVER
+	};
+
+	gameState state = gameState::MENU;
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -44,26 +55,46 @@ int main() {
 			blocky.handle_input(event);
 		}
 
-		//if the two shapes collide move enemy away
-		sf::FloatRect player_bounds = blocky.get_bounds();
-		sf::FloatRect enemy_bounds = enemy.get_bounds();
-		if (player_bounds.intersects(enemy_bounds)) {
-			burger_count++;
-			chomp.play();
-			enemy.set_random_positon();
-			enemy.reset();
-			count.setString(std::to_string(burger_count));
-			
+		if (state == gameState::MENU) {
+			menu_screen(window);
+			state = gameState::PLAY;
 		}
-		//drawing goes from first to last like a stack
-		window.clear();      //refresh window
-		window.draw(sprite_bg); //draw background
-		blocky.draw(window);//render our player
-		enemy.draw(window); //render our enemy
-		window.draw(burger);
-		window.draw(count);
-		enemy.update(); //updates enemy 
-		blocky.update(); //update function which holds our move function
+		else if (state == gameState::PLAY) {
+
+			
+			//if the two shapes collide move enemy away
+			sf::FloatRect player_bounds = blocky.get_bounds();
+			sf::FloatRect enemy_bounds = enemy.get_bounds();
+			if (player_bounds.intersects(enemy_bounds)) {
+				burger_count++;
+				chomp.play();
+				enemy.set_random_positon();
+				enemy.reset();
+				count.setString(std::to_string(burger_count));
+
+			}
+			if (enemy.life == 0) {
+				state = gameState::GAMEOVER;
+				enemy.reset();
+				
+			}
+			//drawing goes from first to last like a stack
+			window.clear();      //refresh window
+			window.draw(sprite_bg); //draw background
+			blocky.draw(window);//render our player
+			enemy.draw(window); //render our enemy
+			window.draw(burger);
+			window.draw(count);
+			enemy.update(); //updates enemy 
+			blocky.update(); //update function which holds our move function
+		}
+		else if (state == gameState::GAMEOVER) {
+			game_over(window);
+			state = gameState::MENU;
+			burger_count = 0;
+			count.setString(std::to_string(burger_count));
+			blocky.reset();
+		}
 		window.display();
 	}
 }

@@ -1,26 +1,34 @@
 #include "Entity.h"
 #include <random>
 
+
 Entity::Entity(sf::Vector2f position) {
 	_texture.loadFromFile("SpriteImages/Burger.png"); ///load image 
 	_entity_sprite.setTexture(_texture);   //assign the image to sprite
 	_entity_sprite.setPosition(position); //set the sprite position
 	_entity_sprite.setScale(4.f, 4.f); //set the scale to 4x size
+	life = 1;
+
 	
 	
 	
 	
 };
+
 	void Entity::reset() {
 		_entity_sprite.setScale(4.f, 4.f);
+		life = 1;
 		}
 	void Entity::update() {
 		sf::Vector2f curr_scale = _entity_sprite.getScale();
 		sf::Vector2f curr_pos = _entity_sprite.getPosition();
 		
-		sf::err() << "Scale is: " << curr_scale.x << ", " << curr_scale.y << std::endl;
+		//sf::err() << "Scale is: " << curr_scale.x << ", " << curr_scale.y << std::endl;
 		if (curr_scale.x <= 0 || curr_scale.y <= 0 ) {
-			_entity_sprite.setScale(4.f, 4.f);
+			
+			life = 0;
+			
+			
 		}
 		else {
 			_entity_sprite.setScale(curr_scale.x - .0022, curr_scale.y - .0022);
